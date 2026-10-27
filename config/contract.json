@@ -1,0 +1,216 @@
+{
+  "contract_version": 1,
+  "target": {
+    "cpu": "NMOS 6502",
+    "machine": "BBC Micro with one writable 16 KiB sideways bank, conventional ROMSEL",
+    "default_asset_bank": 4,
+    "bank_must_be_configurable": true,
+    "bank_window": [
+      32768,
+      49152
+    ],
+    "bank_header": [
+      32768,
+      33024
+    ],
+    "normal_shift_tables": [
+      33024,
+      36864
+    ],
+    "reflected_shift_tables": [
+      36864,
+      40704
+    ],
+    "common_assets": [
+      40704,
+      47050
+    ],
+    "icon_assets": [
+      47050,
+      47680
+    ],
+    "cache_slack": [
+      47680,
+      48640
+    ],
+    "developer_snapshots": [
+      48640,
+      49152
+    ]
+  },
+  "viewports": {
+    "game": {
+      "origin_high": 98,
+      "min_x": 0,
+      "max_x": 319,
+      "min_y": 0,
+      "max_y": 191
+    },
+    "toolbar": {
+      "origin_high": 88,
+      "min_x": 0,
+      "max_x": 319,
+      "min_y": 24,
+      "max_y": 63
+    }
+  },
+  "assets": {
+    "record_bytes": 8,
+    "record_fields": [
+      "signed_offset_x",
+      "signed_offset_y",
+      "width",
+      "height",
+      "absolute_mask_pointer_le16",
+      "absolute_pixel_pointer_le16"
+    ],
+    "table_entry_bytes": 2,
+    "table_entries_are_absolute_record_pointers": true,
+    "maximum_height": 127,
+    "maximum_width": 255,
+    "pixel_bit_order": "leftmost bit 7",
+    "plane_order": "byte columns left to right; rows top to bottom",
+    "transparent_mask_bit": 1,
+    "pixel_under_transparent_mask": 0,
+    "level_header_sprite_word": "sprite_table - level_data",
+    "icon_metadata_bytes": 18,
+    "placeholder_aliases": "Preserve original table aliases from sprite-aliases.json; missing-width entries are not automatically empty."
+  },
+  "main_ram": {
+    "legacy_level_start": 14981,
+    "resident_growth_allowance": 1600,
+    "maximum_new_level_start": 16581,
+    "auxcode": [
+      21440,
+      22411
+    ],
+    "screen_start": 23488,
+    "cache_registry": [
+      2833,
+      3053
+    ],
+    "adapter_scratch": [
+      3053,
+      3072
+    ]
+  },
+  "cache": {
+    "registry_entries": 11,
+    "descriptor_bytes": 20,
+    "lookup_key": "object owner index; descriptor stores captured cache sprite ID",
+    "planes": [
+      "background",
+      "aligned_preserve_mask"
+    ],
+    "plane_capacity": "ceil((width + 7) / 8) * height before clipping",
+    "plane_order": "visible screen columns left to right, visible rows top to bottom",
+    "descriptor_fields": [
+      {
+        "name": "sprite_id",
+        "offset": 0,
+        "bytes": 1
+      },
+      {
+        "name": "owner",
+        "offset": 1,
+        "bytes": 1
+      },
+      {
+        "name": "state",
+        "offset": 2,
+        "bytes": 1
+      },
+      {
+        "name": "storage_bank",
+        "offset": 3,
+        "bytes": 1
+      },
+      {
+        "name": "left",
+        "offset": 4,
+        "bytes": 2
+      },
+      {
+        "name": "bottom",
+        "offset": 6,
+        "bytes": 2
+      },
+      {
+        "name": "width",
+        "offset": 8,
+        "bytes": 1
+      },
+      {
+        "name": "height",
+        "offset": 9,
+        "bytes": 1
+      },
+      {
+        "name": "screen_origin_high",
+        "offset": 10,
+        "bytes": 1
+      },
+      {
+        "name": "viewport",
+        "offset": 11,
+        "bytes": 1
+      },
+      {
+        "name": "background_pointer",
+        "offset": 12,
+        "bytes": 2
+      },
+      {
+        "name": "preserve_mask_pointer",
+        "offset": 14,
+        "bytes": 2
+      },
+      {
+        "name": "capacity_per_plane",
+        "offset": 16,
+        "bytes": 2
+      },
+      {
+        "name": "used_bytes_per_plane",
+        "offset": 18,
+        "bytes": 2
+      }
+    ],
+    "state_values": {
+      "invalid": 0,
+      "valid": 1,
+      "empty": 2
+    },
+    "main_ram_only_bank_marker": 255,
+    "source_data_needed_for_restore": false
+  },
+  "renderer_zero_page": {
+    "sprite_op_flags": 21,
+    "sprite_reflect_flag": 29,
+    "screen_base_address_high": 76,
+    "src_sprite_address_low": 112,
+    "src_sprite_address_high": 113,
+    "sprite_screen_address_low": 114,
+    "sprite_screen_address_high": 115,
+    "sprite_x_pos_low": 116,
+    "sprite_x_pos_high": 117,
+    "sprite_y_pos_low": 118,
+    "sprite_y_pos_high": 119,
+    "sprite_width": 120,
+    "sprite_height": 121,
+    "sprite_y_offset_within_character_row": 122,
+    "sprite_screen_address_for_column_low": 123,
+    "sprite_screen_address_for_column_high": 124,
+    "sprite_data_byte": 125,
+    "backup_sprite_address_low": 126,
+    "backup_sprite_address_high": 127,
+    "src_mask_address_low": 128,
+    "src_mask_address_high": 129,
+    "cached_mask_address_low": 130,
+    "cached_mask_address_high": 131,
+    "original_screen_byte": 132,
+    "mask_data_byte": 133,
+    "temp": 134,
+    "temp_y": 135
+  }
+}

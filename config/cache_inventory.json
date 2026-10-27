@@ -1,0 +1,635 @@
+{
+  "note": "Owner/frame families audited from current level source. Sizes are worst alignment, before clipping. Unused IDs retain lookup slots but receive no cache allocation. Runtime capacity and ownership guards remain mandatory.",
+  "A": {
+    "204": {
+      "owners": [
+        "mouse_ball",
+        "saxophone",
+        "baby",
+        "table"
+      ],
+      "frames": [
+        203,
+        210,
+        214,
+        215,
+        216,
+        217,
+        218,
+        219,
+        220,
+        221,
+        222
+      ]
+    },
+    "205": {
+      "owners": [
+        "left_mouse"
+      ],
+      "frames": [
+        200,
+        201,
+        202,
+        212,
+        213
+      ]
+    },
+    "206": {
+      "owners": [
+        "right_mouse"
+      ],
+      "frames": [
+        200,
+        201,
+        202,
+        212,
+        213
+      ]
+    }
+  },
+  "B": {
+    "215": {
+      "owners": [
+        "clock_workings",
+        "cuckoo"
+      ],
+      "frames": [
+        207,
+        208,
+        209,
+        211,
+        214
+      ]
+    },
+    "216": {
+      "owners": [
+        "rope_broken_bottom_end"
+      ],
+      "frames": [
+        217,
+        218,
+        219,
+        220
+      ]
+    },
+    "223": {
+      "owners": [
+        "hourglass"
+      ],
+      "frames": [
+        221
+      ]
+    }
+  },
+  "C": {
+    "204": {
+      "owners": [
+        "torch"
+      ],
+      "frames": [
+        202,
+        223
+      ]
+    },
+    "209": {
+      "owners": [
+        "table",
+        "parrot"
+      ],
+      "frames": [
+        201,
+        212,
+        213,
+        214,
+        218,
+        219,
+        220
+      ]
+    },
+    "210": {
+      "owners": [
+        "fire1"
+      ],
+      "frames": [
+        60,
+        61,
+        62,
+        63,
+        64,
+        65,
+        66,
+        67,
+        205,
+        206,
+        215
+      ]
+    },
+    "211": {
+      "owners": [
+        "fire2"
+      ],
+      "frames": [
+        60,
+        61,
+        62,
+        63,
+        64,
+        65,
+        66,
+        67,
+        205,
+        206,
+        215
+      ]
+    },
+    "217": {
+      "owners": [
+        "rope_fire"
+      ],
+      "frames": [
+        60,
+        61,
+        62,
+        63,
+        64,
+        65,
+        66,
+        67,
+        205,
+        206,
+        215
+      ]
+    }
+  },
+  "D": {
+    "208": {
+      "owners": [
+        "axe",
+        "partition",
+        "gun"
+      ],
+      "frames": [
+        201,
+        205,
+        206,
+        213,
+        214,
+        215
+      ]
+    },
+    "209": {
+      "owners": [
+        "sign_stand",
+        "baby"
+      ],
+      "frames": [
+        210,
+        216,
+        217,
+        218,
+        219,
+        220
+      ]
+    }
+  },
+  "E": {
+    "214": {
+      "owners": [
+        "small_egg"
+      ],
+      "frames": [
+        210,
+        215,
+        216,
+        217,
+        218
+      ]
+    },
+    "222": {
+      "owners": [
+        "egg"
+      ],
+      "frames": [
+        219,
+        220,
+        221
+      ]
+    },
+    "223": {
+      "owners": [
+        "bird_wings"
+      ],
+      "frames": [
+        206,
+        207,
+        208
+      ]
+    }
+  },
+  "F": {
+    "207": {
+      "owners": [
+        "partition",
+        "banana"
+      ],
+      "frames": [
+        206,
+        218,
+        220,
+        221
+      ]
+    },
+    "209": {
+      "owners": [
+        "gorilla"
+      ],
+      "frames": [
+        210,
+        211,
+        212,
+        213,
+        214,
+        215,
+        216,
+        217,
+        222
+      ]
+    }
+  },
+  "G": {
+    "205": {
+      "owners": [
+        "bow"
+      ],
+      "frames": [
+        202,
+        204
+      ]
+    },
+    "207": {
+      "owners": [
+        "balloon1_rope",
+        "baby"
+      ],
+      "frames": [
+        201,
+        208,
+        209,
+        210,
+        212,
+        213,
+        214,
+        215,
+        217
+      ]
+    }
+  },
+  "H": {
+    "203": {
+      "owners": [
+        "rail_rope_end",
+        "fruit"
+      ],
+      "frames": [
+        204,
+        208
+      ]
+    },
+    "205": {
+      "owners": [
+        "rabbit"
+      ],
+      "frames": [
+        215,
+        216,
+        217,
+        218,
+        219
+      ]
+    }
+  },
+  "I": {
+    "201": {
+      "owners": [
+        "small_stone_object"
+      ],
+      "frames": [
+        200
+      ]
+    },
+    "204": {
+      "owners": [
+        "big_stone_room_0",
+        "big_stone_room_3",
+        "rope_end_room_2"
+      ],
+      "frames": [
+        203,
+        218,
+        219,
+        220,
+        222
+      ]
+    },
+    "205": {
+      "owners": [
+        "seesaw"
+      ],
+      "frames": [
+        206
+      ]
+    },
+    "207": {
+      "owners": [
+        "sword"
+      ],
+      "frames": [
+        208,
+        210,
+        211,
+        212,
+        213
+      ]
+    }
+  },
+  "J": {
+    "201": {
+      "owners": [
+        "cannonball"
+      ],
+      "frames": [
+        200,
+        208,
+        209
+      ]
+    },
+    "207": {
+      "owners": [
+        "babboon1",
+        "partition"
+      ],
+      "frames": [
+        204,
+        205,
+        206,
+        211,
+        212,
+        213
+      ]
+    },
+    "214": {
+      "owners": [
+        "babboon2"
+      ],
+      "frames": [
+        204,
+        205,
+        206
+      ]
+    },
+    "215": {
+      "owners": [
+        "babboon3"
+      ],
+      "frames": [
+        204,
+        205,
+        206
+      ]
+    }
+  },
+  "K": {
+    "209": {
+      "owners": [
+        "drip"
+      ],
+      "frames": [
+        217,
+        218,
+        219,
+        220,
+        221,
+        222
+      ]
+    },
+    "228": {
+      "owners": [
+        "bottle_pour"
+      ],
+      "frames": [
+        210,
+        211,
+        212,
+        213,
+        223
+      ]
+    },
+    "231": {
+      "owners": [
+        "dog_head"
+      ],
+      "frames": [
+        232,
+        234,
+        235
+      ]
+    }
+  },
+  "L": {
+    "201": {
+      "owners": [
+        "whip",
+        "dog",
+        "frog"
+      ],
+      "frames": [
+        203,
+        204,
+        205,
+        206,
+        207,
+        210,
+        211,
+        212,
+        213,
+        222,
+        223,
+        239,
+        240
+      ]
+    },
+    "202": {
+      "owners": [
+        "baby_arms"
+      ],
+      "frames": [
+        235,
+        236,
+        237,
+        238
+      ]
+    },
+    "214": {
+      "owners": [
+        "end_of_partition",
+        "baby_arms",
+        "dog_tail"
+      ],
+      "frames": [
+        215,
+        216,
+        217,
+        218,
+        219,
+        220,
+        231,
+        235,
+        236,
+        237,
+        238
+      ]
+    }
+  },
+  "M": {
+    "207": {
+      "owners": [
+        "block"
+      ],
+      "frames": [
+        206
+      ]
+    },
+    "212": {
+      "owners": [
+        "hamster_feet_or_jam"
+      ],
+      "frames": [
+        208,
+        209,
+        210,
+        211,
+        213,
+        214,
+        215,
+        228
+      ]
+    },
+    "218": {
+      "owners": [
+        "tulip_bulb"
+      ],
+      "frames": [
+        217
+      ]
+    }
+  },
+  "N": {
+    "208": {
+      "owners": [
+        "partition"
+      ],
+      "frames": [
+        206,
+        207
+      ]
+    },
+    "210": {
+      "owners": [
+        "dog_head",
+        "clanger"
+      ],
+      "frames": [
+        212,
+        213,
+        223,
+        227,
+        230,
+        232
+      ]
+    },
+    "211": {
+      "owners": [
+        "drip"
+      ],
+      "frames": [
+        214,
+        215,
+        216,
+        217
+      ]
+    },
+    "226": {
+      "owners": [
+        "bell"
+      ],
+      "frames": [
+        225
+      ]
+    },
+    "229": {
+      "owners": [
+        "clanger_end"
+      ],
+      "frames": [
+        228,
+        231
+      ]
+    }
+  },
+  "O": {
+    "204": {
+      "owners": [
+        "bowl"
+      ],
+      "frames": [
+        200,
+        201
+      ]
+    },
+    "207": {
+      "owners": [
+        "trapdoor",
+        "tnt_barrel"
+      ],
+      "frames": [
+        206,
+        208,
+        209,
+        210
+      ]
+    },
+    "216": {
+      "owners": [
+        "explosion"
+      ],
+      "frames": [
+        217
+      ]
+    },
+    "219": {
+      "owners": [
+        "smoke"
+      ],
+      "frames": [
+        220,
+        221,
+        222,
+        223,
+        224,
+        225,
+        226,
+        227
+      ]
+    }
+  },
+  "P": {
+    "202": {
+      "owners": [
+        "ring"
+      ],
+      "frames": [
+        200
+      ]
+    }
+  }
+}
