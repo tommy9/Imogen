@@ -3,6 +3,8 @@
 A reduced-flicker version of Imogen for the BBC with sideways RAM. Imogen was created by Michael St Aubyn and published by Micro Power in 1986. This update is based on the detailed disassembly by
 [ZornsLemma and TobyLobster](https://github.com/ZornsLemma/Imogen).
 
+Try it out at https://bbc.xania.org/?autoboot&disc=github:tommy9/imogen/imogen.ssd
+
 The reduction in flicker is achieved by making a faster sprite renderer, made possible by the increased memory available. It uses shift/reflection tables to write up to 8 pixels to the screen at a time instead of 1 at a time in the original version. The main player sprite is also updated based on a timer to reduce tearing and some remains for other sprites. There is also a smoother scrolling message for the epilogue.
 
 ## Build
