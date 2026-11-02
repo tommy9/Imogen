@@ -7,6 +7,9 @@ Try it out at https://bbc.xania.org/?autoboot&disc=github:tommy9/imogen/imogen.s
 
 The reduction in flicker is achieved by making a faster sprite renderer, made possible by the increased memory available. It uses shift/reflection tables to write up to 8 pixels to the screen at a time instead of 1 at a time in the original version. The main player sprite is also updated based on a timer to reduce tearing and some remains for other sprites. There is also a smoother scrolling message for the epilogue.
 
+## Level order option
+The default level order is that from the original disk version of the game that selects one of 4 starting levels at random. To follow the fixed level order used in the tape version of the game, press T while the loading screen is displayed.
+
 ## Build
 
 Requires Python 3.9 or later and `beebasm` on PATH. The Python build tools use only the standard library. All stock sprite sources and the converter are included.

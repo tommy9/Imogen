@@ -8725,6 +8725,9 @@ ENDIF
     and #%10111111
     sta developer_flags
 .skip_writing_developer_flags
+; Consume the loading-screen choice before OSBYTE 18 resets the keyboard buffer.
+; Apply it after ICODATA is copied, leaving its developer flags untouched.
+    jsr select_loading_level_order
     jsr handle_developer_mode_setup
     lda #osbyte_reset_soft_keys
     jsr osbyte                                                        ; Reset function keys
@@ -8756,6 +8759,26 @@ ENDIF
 
 .icodata_filename
     equs "icodata", &0d
+; MOS retains key presses while the bootstrap loads/checks the bank and GAME.
+; Read without waiting, accepting either case and ignoring unrelated keys.
+.select_loading_level_order
+    jsr inkey_0
+    beq return_loading_level_order
+    and #&df
+    cmp #'T'
+    bne select_loading_level_order
+    ldy #16
+.copy_tape_level_order_loop
+    lda tape_level_order,y
+    sta level_ordering_table,y
+    dey
+    bpl copy_tape_level_order_loop
+.return_loading_level_order
+    rts
+.tape_level_order
+; First byte is the starting filename letter, followed by the sixteen levels.
+    equs "G", "GLEHKANMIOPCDFJB"
+
 .character_fe_bitmap
     equb %00001000
     equb %00010100
