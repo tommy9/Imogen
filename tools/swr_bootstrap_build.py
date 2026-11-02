@@ -26,7 +26,7 @@ def build(assembler,root,verbose=False):
     maker=(root/'src/ssd_maker.asm').read_text()
     (output/'ssd_maker.asm').write_text(maker)
     report={'bootstrap_load':labels['.boot_start'],'bootstrap_end':labels['.boot_end'],
-            'chunk_buffer':[0x3000,0x3400],'bank_file':'SWBANK','engine_file':'GAME',
+            'bank_staging_buffer':[0x2000,0x6000],'bank_file':'SWBANK','engine_file':'GAME',
             'logo_loader_changed':False,'renderer_switched':True,'inputs':inputs}
     if any(hashlib.sha256((root/name).read_bytes()).hexdigest()!=digest
            for name,digest in inputs.items()):

@@ -1,7 +1,7 @@
 INCLUDE "build/engine_exports.asm"
 
 PUTFILE "build/imogen",     "IMOGEN", $3900, $3900
-PUTFILE "build/bootstrap/bootstrap", "G", &2000, &2000
+PUTFILE "build/bootstrap/bootstrap", "G", &1200, &1200
 PUTFILE "build/g", "GAME", g_load_address, g_execution_address
 PUTFILE "build/swr_assets/swr_bank.bin", "SWBANK", &8000, &8000
 PUTFILE "build/auxcode",   "AUXCODE", $0000, $0000

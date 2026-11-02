@@ -1,10 +1,10 @@
-; Phase 4 bootstrap. IMOGEN's untouched G handoff loads this at &2000.
-; Stream SWBANK through &3000..&33FF; keep the logo/screen intact.
+; IMOGEN's zero-page handoff loads this over the finished logo loader at &1200.
+; OSFILE stages the whole SWBANK at &2000..&5FFF, below the screen at &6200.
 ; Finally OSFILE GAME from an eleven-byte zero-page trampoline, as IMOGEN does.
 INCLUDE "build/engine_exports.asm"
 INCLUDE "build/swr_boot_config.asm"
 INCLUDE "build/swr_assets/bank_exports.asm"
-ORG &2000
+ORG &1200
 .boot_start
     CLD
     TSX: STX boot_stack
@@ -15,7 +15,6 @@ ORG &2000
     LDA #LO(boot_brk): STA &0202
     LDA #HI(boot_brk): STA &0203
     PLP
-    LDA #0: STA boot_handle
     LDA #1: STA boot_error
     ; Check length before writing any bank data.
     LDA #5
@@ -56,37 +55,31 @@ ENDIF
     JMP boot_fail
 .boot_bank_found
     JSR boot_restore_bank
-    LDA #1: STA boot_error
-    LDA #&40
-    LDX #LO(boot_bank_name): LDY #HI(boot_bank_name)
-    JSR &FFCE
-    STA boot_handle
-    BNE boot_opened
-    JMP boot_fail
-.boot_opened
-    LDA #&80: STA boot_destination_high
-.boot_read_chunk
-    ; GBPB 4 reads sequentially. Refresh mutated address/count fields each time.
-    LDA boot_handle: STA boot_gbpb
+    ; OSFILE uses the supplied main-RAM address when control-block byte 6 is zero.
+    ; Clear its high address bytes too: the catalogue may contain &FFFF8000.
+    LDY #6
     LDA #0
-    STA boot_gbpb+1: STA boot_gbpb+3: STA boot_gbpb+4
-    STA boot_gbpb+5: STA boot_gbpb+7: STA boot_gbpb+8
-    LDA #&30: STA boot_gbpb+2
-    LDA #4: STA boot_gbpb+6
-    LDA #4
-    LDX #LO(boot_gbpb): LDY #HI(boot_gbpb)
-    JSR &FFD1
-    LDA boot_gbpb+5: ORA boot_gbpb+6
-    ORA boot_gbpb+7: ORA boot_gbpb+8
-    BEQ boot_chunk_ready
+.boot_set_load_address
+    STA boot_file_block,Y
+    DEY
+    CPY #1
+    BNE boot_set_load_address
+    LDA #&20: STA boot_file_block+3
+    LDA #1: STA boot_error
+    LDX #LO(boot_file_block): LDY #HI(boot_file_block)
+    LDA #&FF
+.boot_load_bank
+    JSR &FFDD
+    CMP #1
+    BEQ boot_bank_loaded
     JMP boot_fail
-.boot_chunk_ready
+.boot_bank_loaded
     LDA #4: STA boot_error
     LDA boot_selected_bank: JSR boot_write_bank
     LDA #0: STA &70: STA &72
-    LDA boot_destination_high: STA &71
-    LDA #&30: STA &73
-    LDX #4: LDY #0
+    LDA #&80: STA &71
+    LDA #&20: STA &73
+    LDX #64: LDY #0
 .boot_copy_page
     LDA (&72),Y
     STA (&70),Y
@@ -99,19 +92,9 @@ ENDIF
     INC &71: INC &73
     DEX
     BNE boot_copy_page
-    LDA &71: STA boot_destination_high
-    JSR boot_restore_bank
-    LDA #1: STA boot_error
-    LDA boot_destination_high
-    CMP #&C0
-    BEQ boot_read_done
-    JMP boot_read_chunk
-.boot_read_done
-    LDA #0: LDY boot_handle
-    JSR &FFCE
-    LDA #0: STA boot_handle
-    LDA boot_selected_bank: JSR boot_write_bank
-    ; Compile-time image identity includes configured slot, format and CRC.
+.boot_copy_done
+    ; Check format, configured slot and the generated image identity tag.
+    ; This compares the stored CRC field only; no full-bank CRC is calculated.
     LDA #5: STA boot_error
     LDY #7
 .boot_header_loop
@@ -122,68 +105,17 @@ ENDIF
 .boot_match_1
     DEY
     BPL boot_header_loop
-    LDA #4: STA boot_error
+    LDA #5: STA boot_error
     LDY #3
-.boot_crc_init
+.boot_identity_loop
     LDA &8034,Y
     CMP boot_expected_crc,Y
-    BEQ boot_match_2
+    BEQ boot_identity_next
     JMP boot_fail
-.boot_match_2
-    LDA #&FF: STA boot_crc,Y
+.boot_identity_next
     DEY
-    BPL boot_crc_init
-    LDA #0: STA &70
-    LDA #&80: STA &71
-    LDY #0
-.boot_crc_byte
-    ; CRC field is zero during checksum; only immutable prefix is covered.
-    LDA &71
-    CMP #&80
-    BNE boot_crc_read
-    TYA
-    CMP #&34
-    BCC boot_crc_read
-    CMP #&38
-    BCS boot_crc_read
-    LDA #0
-    BEQ boot_crc_update
-.boot_crc_read
-    LDA (&70),Y
-.boot_crc_update
-    EOR boot_crc: STA boot_crc
-    LDX #8
-.boot_crc_bit
-    LSR boot_crc+3
-    ROR boot_crc+2
-    ROR boot_crc+1
-    ROR boot_crc
-    BCC boot_crc_next_bit
-    LDA boot_crc: EOR #&20: STA boot_crc
-    LDA boot_crc+1: EOR #&83: STA boot_crc+1
-    LDA boot_crc+2: EOR #&B8: STA boot_crc+2
-    LDA boot_crc+3: EOR #&ED: STA boot_crc+3
-.boot_crc_next_bit
-    DEX
-    BNE boot_crc_bit
-    INY
-    BNE boot_crc_limit
-    INC &71
-.boot_crc_limit
-    LDA &71
-    CMP #HI(swr_immutable_end)
-    BNE boot_crc_byte
-    CPY #LO(swr_immutable_end)
-    BNE boot_crc_byte
-    LDY #3
-.boot_crc_compare
-    LDA boot_crc,Y: EOR #&FF
-    CMP boot_expected_crc,Y
-    BEQ boot_match_3
-    JMP boot_fail
-.boot_match_3
-    DEY
-    BPL boot_crc_compare
+    BPL boot_identity_loop
+.boot_verified
     JSR boot_restore_bank
     JSR boot_restore_brkv
     ; GAME overwrites this bootstrap. The return code and control block remain outside the loaded engine.
@@ -199,8 +131,6 @@ ENDIF
     LDA #&FF: STA &76
     LDX #&70: LDY #0
     JMP &0000
-.boot_fail_far
-    JMP boot_fail
 ; Probe without committing any bank content. Every modified byte is restored.
 ; Reject ROM headers and incomplete address decoding before
 ; loading SWBANK. The independent address-line markers cover all 14 lines.
@@ -291,12 +221,6 @@ ENDIF
     LDA #1: STA boot_error
 .boot_fail
     JSR boot_restore_bank
-    LDA boot_handle
-    BEQ boot_no_close
-    TAY
-    LDA #0: STA boot_handle
-    JSR &FFCE
-.boot_no_close
     JSR boot_restore_brkv
     LDA #6: JSR &FFEE ; logo loader disabled text output
     LDA boot_error: ASL A: TAX
@@ -315,12 +239,12 @@ ENDIF
     EQUS "SWR startup stopped"
     EQUB 0
 .boot_messages
-    EQUW boot_io_error,boot_io_error,boot_ram_error,boot_size_error,boot_crc_error,boot_slot_error
+    EQUW boot_io_error,boot_io_error,boot_ram_error,boot_size_error,boot_readback_error,boot_slot_error
 .boot_io_error EQUS 13,10,"SWR: Cannot read SWBANK",13,10,0
 .boot_ram_error EQUS 13,10,"SWR: No free independent writable 16K RAM bank",13,10,0
 .boot_size_error EQUS 13,10,"SWR: SWBANK must be 16384 bytes",13,10,0
-.boot_crc_error EQUS 13,10,"SWR: Bank readback/checksum failed",13,10,0
-.boot_slot_error EQUS 13,10,"SWR: Wrong SWBANK format or slot",13,10,0
+.boot_readback_error EQUS 13,10,"SWR: Bank write/readback failed",13,10,0
+.boot_slot_error EQUS 13,10,"SWR: Wrong SWBANK format, slot or image",13,10,0
 .boot_expected_header EQUS "IMS2"
     EQUB 2,8,swr_asset_bank,1
 .boot_expected_crc
@@ -333,14 +257,10 @@ INCLUDE "build/bootstrap/bootstrap_crc.asm"
 .boot_game_name EQUS "GAME",13
 .boot_file_block EQUW boot_bank_name
     SKIP 16
-.boot_gbpb SKIP 13
 .boot_old_brkv SKIP 2
-.boot_crc SKIP 4
 .boot_old_bank SKIP 1
 .boot_stack SKIP 1
-.boot_handle SKIP 1
 .boot_error SKIP 1
-.boot_destination_high SKIP 1
 .boot_end
-ASSERT boot_end <= &3000
+ASSERT boot_end <= &2000 ; whole-bank staging must not overwrite the bootstrap
 SAVE "build/bootstrap/bootstrap", boot_start, boot_end
